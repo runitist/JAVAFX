@@ -20,14 +20,17 @@ public class Main extends Application {
 
 			// stage > scene > container > node
 
-			for (int y = 0; y < 10; y++) {
-				for (int x = 0; x < 10; x++) {
-					Label label = new Label();
-					label.setStyle("-fx-border-color:black;-fx-font-size:15");
-					label.setText(" (" + x + ", " + y + ") ");
-					grid.addRow(y, label);
-				}
-			}
+			Label label1 = new Label("AA");
+			Label label2 = new Label("B");
+			Label label3 = new Label("C");
+			
+			label1.setStyle("-fx-border-color:black; -fx-font-size:30;");
+			label2.setStyle("-fx-border-color:black; -fx-font-size:30;");
+			label3.setStyle("-fx-border-color:black; -fx-font-size:30;");
+			
+			grid.add(label1, 0, 0, 2, 1);
+			grid.add(label2, 0, 1, 1, 1);
+			grid.add(label3, 1, 1, 1, 1);
 			
 			grid.setAlignment(Pos.CENTER);
 			
