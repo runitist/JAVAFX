@@ -1,7 +1,6 @@
 package application;
 
 import java.io.FileInputStream;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -68,6 +67,7 @@ public class Main extends Application {
 			}
 			
 			stage.setScene(scene);
+			stage.setTitle("¾Ù¹ü");
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
