@@ -1,24 +1,26 @@
 package application;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	Canvas canvas = new Canvas(800, 500);
-	GraphicsContext gc;
-	ColorPicker cp = new ColorPicker();
-	Slider slider = new Slider();
-	Label label = new Label();
+	Label lName = new Label("UserName: ");
+	Label lPassword = new Label("Password: ");
+	Label lMessage = new Label();
+	TextField tfName = new TextField();
+	PasswordField tfPassword = new PasswordField();
+
+	Button button = new Button("Login");
+
 	GridPane grid = new GridPane();
 
 	StackPane pane = new StackPane();
@@ -27,42 +29,33 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			gc = canvas.getGraphicsContext2D();
-			gc.setLineWidth(1);
-
-			pane.getChildren().addAll(canvas, grid);
-			grid.addRow(0, cp, slider, label);
+			button.prefHeightProperty().bind(tfName.heightProperty().add(tfPassword.heightProperty()));
+			grid.addRow(0, lName, tfName);
+			grid.addRow(1, lPassword, tfPassword);
+			grid.add(button, 2, 0, 1, 2);
+			grid.add(lMessage, 0, 2, 3, 1);
+			grid.setAlignment(Pos.CENTER);
 			
-			slider.setMin(1);
-			slider.setMax(100);
-			slider.setShowTickLabels(true);
-			slider.setShowTickMarks(true);
-			slider.valueProperty().addListener(e->{
-				double value = slider.getValue();
-				String str = String.format("%.1f", value);
-				label.setText(str);
-				gc.setLineWidth(value);
-			});
-			
-			
-			cp.setValue(Color.BLACK);
-			cp.setOnAction(e->{
-				gc.setStroke(cp.getValue());
-			});
-
-			scene.setOnMousePressed(e -> {
-				gc.beginPath();
-				gc.lineTo(e.getSceneX(), e.getSceneY());
-				gc.stroke();
+			button.setOnAction(e->{
+				lMessage.setStyle("-fx-text-fill: red;");
+				String name = tfName.getText();
+				String password = tfPassword.getText();
+				if(name.equals("")) {
+					lMessage.setText("Please enter your name");
+				}else if(password.equals("")) {
+					lMessage.setText("Please enter your password");
+				}else if(!name.equals("Rin")||!password.equals("password")) {//로그인 정보 유효성 검증
+					lMessage.setText("access denied");
+				}else {
+					lMessage.setStyle("-fx-text-fill: green;");
+					lMessage.setText("access acquired");
+				}
 			});
 
-			scene.setOnMouseDragged(e -> {
-				gc.lineTo(e.getSceneX(), e.getSceneY());
-				gc.stroke();
-			});
+			pane.getChildren().add(grid);
 
 			stage.setScene(scene);
-			stage.setTitle("그림판");
+			stage.setTitle("로그인");
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
