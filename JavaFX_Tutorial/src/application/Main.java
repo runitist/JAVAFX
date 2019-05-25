@@ -10,27 +10,28 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	
+
 	GridPane grid = new GridPane();
-	Scene scene = new Scene(grid, 400, 400);
-	
+	Scene scene = new Scene(grid, 550, 400);
+
 	@Override
 	public void start(Stage stage) {
 		try {
 
 			// stage > scene > container > node
-			Label label1 = new Label("Hello");
-			Label label2 = new Label("World");
 
-			grid.setAlignment(Pos.CENTER);
-			grid.setHgap(10);
-			grid.setVgap(10);
+			for (int y = 0; y < 10; y++) {
+				for (int x = 0; x < 10; x++) {
+					Label label = new Label();
+					label.setStyle("-fx-border-color:black;-fx-font-size:15");
+					label.setText(" (" + x + ", " + y + ") ");
+					grid.addRow(y, label);
+				}
+			}
 			
-			grid.addColumn(0, label1, label2);
-//			grid.addRow(1,label1, label2);
+			grid.setAlignment(Pos.CENTER);
 			
 			stage.setScene(scene);
-			stage.setTitle("¹ÙµÏÆÇ Á¤·Ä");
 			stage.show();
 
 		} catch (Exception e) {
